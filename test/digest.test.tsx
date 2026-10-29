@@ -9,7 +9,7 @@ const runsDir = mkdtempSync(join(tmpdir(), 'rig-'));
 const config = { adapter: 'shim', installed: '2026-10-29T14:06:00+01:00', beatEverySeconds: 60, runsDir };
 
 const line = (job: string, status: string, owner: string | null, at: string) =>
-  JSON.stringify({ at, job, status, ...(owner ? { owner } : {}) });
+  JSON.stringify({ at, job, status, owner });
 
 beforeAll(() => {
   writeFileSync(

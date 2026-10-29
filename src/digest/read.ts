@@ -62,7 +62,7 @@ export const readNight: ReadNight = (runsDir, night) => {
     if (line.status === 'fail') row.fails++;
     row.owner = line.owner;
     row.lastStatus = line.status;
-    row.lastError = line.error ?? null;
+    if (line.error !== undefined) row.lastError = line.error; // newest error of the night
     row.lastAt = line.at;
     rows.set(line.job, row);
   }

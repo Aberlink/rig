@@ -8,7 +8,7 @@ export type DigestRow = {
   retries: number;
   fails: number;
   lastStatus: Status;
-  lastError: string | null;
+  lastError: string | null; // newest error of the night, even if the job recovered
   firstAt: string; // ISO with offset, as written in the log
   lastAt: string;
 };

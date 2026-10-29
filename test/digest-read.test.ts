@@ -18,9 +18,11 @@ describe('readNight', () => {
     expect(night?.statusCounts).toEqual({ ok: 10, retry: 4, fail: 1 });
 
     const row = (job: string) => night?.rows.find((r) => r.job === job);
-    expect(row('fixtures/refresh')).toMatchObject({ runs: 4, retries: 3, lastStatus: 'ok', lastError: null });
+    expect(row('fixtures/refresh')).toMatchObject({ runs: 4, retries: 3, lastStatus: 'ok', lastError: 'upstream 503' });
     expect(row('notes/backup')).toMatchObject({ fails: 1, lastStatus: 'fail', lastError: 'quota exceeded' });
     expect(row('digest/render')?.owner).toBeNull();
+    expect(row('lane/sync')?.lastError).toBe('lock held');
+    expect(['digest/render', 'rig/rotate-logs'].map((job) => row(job)?.lastError)).toEqual([null, null]);
     expect(row('lane/sync')).toMatchObject({
       firstAt: '2026-10-28T23:00:06+01:00',
       lastAt: '2026-10-29T05:00:04+01:00',
